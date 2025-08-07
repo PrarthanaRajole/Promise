@@ -277,7 +277,7 @@ class IndexController {
         }
     }
         // ✅ ---------- WATCHLIST ----------
-    async getWatchlist(req, res) {
+    /*async getWatchlist(req, res) {
         try {
             const { user_id } = req.params;
 
@@ -291,7 +291,29 @@ class IndexController {
             console.error("Error fetching watchlist:", error);
             res.status(500).send("Internal Server Error");
         }
+    }*/
+
+    // controllers/index.js
+    async getWatchlist(req, res) {
+        try {
+            const { user_id } = req.params;
+
+            const [rows] = await this.db.query(
+                `SELECT w.id, w.user_id, w.ticker_symbol, w.company_name, c.stock_price
+                FROM Watchlist w
+                JOIN Companies c ON w.ticker_symbol = c.ticker_symbol
+                WHERE w.user_id = ?`,
+            [user_id]
+        );
+
+        res.json(rows);
+    } catch (error) {
+        console.error("Error fetching watchlist:", error);
+        res.status(500).send("Internal Server Error");
     }
+}
+    
+        
 
     async addToWatchlist(req, res) {
         try {
