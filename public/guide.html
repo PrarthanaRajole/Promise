@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Capita - Investment Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #001f33, #000428);
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #00ffaa;
+      color: #000;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      position: sticky;
+      top: 72px;
+      z-index: 10;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px 30px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffaa44;
+    }
+
+    h2 {
+      color: #00ffaa;
+      margin-top: 30px;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+    }
+
+    a.back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #00ffaa;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    a.back-btn:hover {
+      background-color: #00cc99;
+    }
+
+    iframe {
+      width: 100%;
+      height: 360px;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px #00ffaa33;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .navbar {
+      background: #0a0a0a;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(0, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar h1 {
+      font-size: 26px;
+      color: #00ffcc;
+      margin: 0;
+      font-weight: bold;
+      text-shadow: 0 0 5px #00bfff;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .nav-center a {
+      text-decoration: none;
+      color: #00ffcc;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .nav-center a:hover {
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .logout-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: #d93636;
+    }
+
+    .news-highlights {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px #00ffaa22;
+    }
+
+    .news-highlights h3 {
+      color: #00ffaa;
+      margin-top: 0;
+    }
+
+    .news-highlights ul {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    #newsFeedWidget {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 NAVBAR -->
+  <div class="navbar">
+    <h1>📈 Capita</h1>
+    <div class="nav-center">
+      <a href="dashboard.html">Explore</a>
+      <a href="watchlist.html">Watchlist</a>
+      <a href="myportfolio.html">My Portfolio</a>
+      <a href="transactions.html">Transactions</a>
+      <a href="sip.html">SIP Calculator</a>
+      <a href="guide.html">Guide</a>
+      <a href="profile.html">My Profile</a>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+  </div>
+
+  <!-- 📘 HEADER -->
+  <header>📘 Beginner's Guide to Investing</header>
+
+  <!-- 📚 MAIN CONTENT -->
+  <div class="container">
+    <h2>What Are Stocks?</h2>
+    <p>Stocks represent partial ownership in a company. When you buy a stock, you're essentially owning a piece of that company and are entitled to a portion of its assets and earnings.</p>
+
+    <h2>Why Should You Invest?</h2>
+    <ul>
+      <li>To grow your wealth over time</li>
+      <li>To beat inflation</li>
+      <li>To meet life goals (education, travel, retirement, etc.)</li>
+    </ul>
+
+    <h2>What is SIP?</h2>
+    <p>SIP (Systematic Investment Plan) is a method of investing a fixed sum regularly in mutual funds. It’s ideal for disciplined, long-term investors.</p>
+
+    <h2>Types of Investments</h2>
+    <ul>
+      <li><strong>Stocks:</strong> Shares of companies traded publicly</li>
+      <li><strong>Mutual Funds:</strong> Pooled funds invested by experts</li>
+      <li><strong>ETFs:</strong> Market-traded mutual fund equivalents</li>
+      <li><strong>Bonds:</strong> Fixed income instruments</li>
+      <li><strong>Real Estate:</strong> Investing in property</li>
+    </ul>
+
+    <h2>Steps to Start Investing</h2>
+    <ol>
+      <li>Open a Demat & Trading account</li>
+      <li>Define your investment goals</li>
+      <li>Research and select investment options</li>
+      <li>Start small – SIP is a great way</li>
+      <li>Monitor and rebalance your portfolio periodically</li>
+    </ol>
+
+    <h2>Tips for Beginners</h2>
+    <ul>
+      <li>Start early to leverage the power of compounding</li>
+      <li>Diversify your investments</li>
+      <li>Don’t panic during market dips</li>
+      <li>Invest regularly, not randomly</li>
+      <li>Focus on long-term gains, not short-term profits</li>
+    </ul>
+
+    <h2>🎥 Watch: Basics of Stock Market</h2>
+    <iframe src="https://www.youtube.com/embed/PHe0bXAIuk0" title="Stock Market for Beginners"></iframe>
+
+    <h2>📘 Glossary (Quick Terms)</h2>
+    <ul>
+      <li><strong>IPO:</strong> Initial Public Offering – when a company goes public</li>
+      <li><strong>Dividend:</strong> Company profit shared with shareholders</li>
+      <li><strong>Bull Market:</strong> When the market is rising</li>
+      <li><strong>Bear Market:</strong> When the market is declining</li>
+      <li><strong>Index:</strong> A benchmark (like Nifty, Sensex) for the market</li>
+    </ul>
+
+    <h2>📰 Smart News Feed</h2>
+    <p>Use Smart Newsfeed to make informed decisions:</p>
+    <div id="newsFeedWidget"></div>
+    <script src="https://widgets.profit.com/news-feed-widget.js"></script>
+    <script>
+      NewsFeedWidget.init({
+        container: '#newsFeedWidget',
+        symbols: ['RELIANCE', 'TCS', 'SBIN', 'INFY', 'NSE:*'],
+        source: 'news_and_tweets',
+        theme: 'dark',
+        maxItems: 5
+      });
+    </script>
+
+    <div class="news-highlights">
+      <h3>📍 Market Highlights</h3>
+      <ul>
+        <li><strong>Sensex dips ~250 pts:</strong> Global sell-off weighs down equities</li>
+        <li><strong>Reliance Industries:</strong> Quarterly results beat expectations</li>
+        <li><strong>SBI board:</strong> Approves ₹10,000 crore fundraising plan</li>
+        <li><strong>LIC IPO:</strong> Oversubscribed on day one of bidding</li>
+      </ul>
+    </div>
+
+    <a class="back-btn" href="dashboard.html">← Back to Dashboard</a>
+  </div>
+
+  <!-- 🚪 Logout Script -->
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    });
+  </script>
+
+  <!-- 🧾 Footer -->
+  <footer>
+    © 2025 Capita. All rights reserved. | Built for beginner investors 🌱
+  </footer>
+
+</body>
+</html>
