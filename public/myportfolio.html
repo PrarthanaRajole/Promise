@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio</title>
+  <title>Capita - My Portfolio</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
+      background: linear-gradient(to bottom right, #000000, #000428, #001f33);
+      color: #ffffff;
     }
 
     .navbar {
-      background-color: #ffffff;
+      background-color: #0a0a0a;
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0, 255, 255, 0.1);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -24,9 +26,10 @@
 
     .navbar h1 {
       font-size: 26px;
-      color: #2c3e50;
+      color: #00ffcc;
       margin: 0;
       font-weight: bold;
+      text-shadow: 0 0 5px #00bfff;
     }
 
     .nav-center {
@@ -39,17 +42,16 @@
 
     .nav-center a {
       text-decoration: none;
-      color: #2c3e50;
+      color: #00ffcc;
       font-weight: bold;
       font-size: 18px;
-      transition: color 0.2s, background 0.2s;
       padding: 10px 14px;
       border-radius: 6px;
+      transition: background 0.2s;
     }
 
     .nav-center a:hover {
-      background: #f0f4ff;
-      color: #007bff;
+      background: rgba(0, 255, 255, 0.1);
     }
 
     .logout-btn {
@@ -68,43 +70,51 @@
     }
 
     .container {
-      margin: 30px 50px;
+      margin: 40px auto;
+      max-width: 900px;
+      background: rgba(15, 15, 15, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #00bfff40;
     }
 
     h2 {
-      margin-bottom: 20px;
-      color: #2c3e50;
+      color: #00ffcc;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px #00bfff;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
+      background: #111;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
     }
 
     th, td {
       padding: 14px;
       text-align: center;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #00ffcc30;
+      color: #e0e0e0;
     }
 
     th {
-      background: #f4f6fa;
-      font-weight: bold;
-      color: #2c3e50;
+      background: #1a1a1a;
+      color: #00ffcc;
+      text-shadow: 0 0 6px #00bfff50;
     }
 
     tr:hover {
-      background: #f9fbff;
+      background: rgba(0, 255, 255, 0.05);
     }
 
     .empty-msg {
       text-align: center;
       padding: 20px;
-      color: #777;
+      color: #aaa;
       font-size: 18px;
     }
   </style>
@@ -113,13 +123,15 @@
 
   <!-- ✅ Navbar -->
   <div class="navbar">
-    <h1>📈 StockTrade</h1>
+    <h1>📈 Capita</h1>
 
     <div class="nav-center">
       <a href="dashboard.html">Explore</a>
       <a href="watchlist.html">Watchlist</a>
       <a href="myportfolio.html">My Portfolio</a>
       <a href="transactions.html">Transactions</a>
+      <a href="sip.html">SIP Calculator</a>
+      <a href="guide.html">Guide</a>
       <a href="profile.html">My Profile</a>
     </div>
 
@@ -165,22 +177,15 @@
 
       const res = await fetch(`/api/transactions/${user_id}`);
       const transactions = await res.json();
-      console.log("✅ Transactions for Portfolio:", transactions);
 
-      // ✅ Case-insensitive 'buy' filter
       const buys = transactions.filter(tx =>
         String(tx.transaction_type).toLowerCase() === 'buy'
       );
-      console.log("✅ Buy transactions only:", buys);
 
       const holdings = {};
-
       buys.forEach(tx => {
         const { ticker_symbol, company_name, quantity, price_per_share } = tx;
-
         if (!ticker_symbol || !company_name) return;
-
-        console.log("📦 Processing:", ticker_symbol, quantity, price_per_share);
 
         if (!holdings[ticker_symbol]) {
           holdings[ticker_symbol] = {
@@ -196,11 +201,9 @@
 
       const table = document.getElementById('portfolioBody');
       table.innerHTML = '';
-
       const symbols = Object.keys(holdings);
 
       if (symbols.length === 0) {
-        console.log("❌ No valid holdings after grouping.");
         document.getElementById('emptyMessage').style.display = 'block';
         document.getElementById('portfolioTable').style.display = 'none';
         return;
@@ -229,9 +232,6 @@
 
   loadPortfolio();
 </script>
-
-
-
 
 </body>
 </html>
