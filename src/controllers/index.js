@@ -14,8 +14,6 @@ class IndexController {
         console.log("✅ Database initialized successfully");
     }
 
-
-
     // ✅ ---------- COMPANIES ----------
     async getCompanies(req, res) {
         try {
