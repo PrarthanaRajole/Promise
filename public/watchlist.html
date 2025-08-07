@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Watchlist</title>
+  <title>Capita - Watchlist</title>
   <style>
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
+      background: linear-gradient(to bottom right, #000000, #000428, #001f33);
+      color: #ffffff;
     }
 
     .navbar {
-      background-color: #ffffff;
+      background: #0a0a0a;
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0, 255, 255, 0.1);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -24,9 +26,10 @@
 
     .navbar h1 {
       font-size: 26px;
-      color: #2c3e50;
+      color: #00ffcc;
       margin: 0;
       font-weight: bold;
+      text-shadow: 0 0 5px #00bfff;
     }
 
     .nav-center {
@@ -39,17 +42,16 @@
 
     .nav-center a {
       text-decoration: none;
-      color: #2c3e50;
+      color: #00ffcc;
       font-weight: bold;
       font-size: 18px;
-      transition: color 0.2s, background 0.2s;
       padding: 10px 14px;
       border-radius: 6px;
+      transition: background 0.2s;
     }
 
     .nav-center a:hover {
-      background: #f0f4ff;
-      color: #007bff;
+      background: rgba(0, 255, 255, 0.1);
     }
 
     .logout-btn {
@@ -61,6 +63,7 @@
       cursor: pointer;
       font-size: 15px;
       font-weight: bold;
+      transition: background 0.2s;
     }
 
     .logout-btn:hover {
@@ -68,15 +71,25 @@
     }
 
     .container {
-      margin: 20px 40px;
+      margin: 30px auto;
+      padding: 0 40px 60px;
+      max-width: 900px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #00ffcc;
+      text-shadow: 0 0 8px #00bfff;
     }
 
     .stock-card {
-      background: white;
-      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 18px;
       margin-bottom: 15px;
       border-radius: 10px;
-      box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0px 2px 8px rgba(0, 255, 255, 0.05);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -84,23 +97,27 @@
 
     .stock-info strong {
       font-size: 18px;
-      color: #2c3e50;
+      color: #00ffcc;
+      text-shadow: 0 0 4px #00bfff;
     }
 
     .stock-info small {
-      color: #777;
+      color: #cccccc;
+      font-size: 14px;
+      display: block;
+      margin: 2px 0;
     }
 
     .remove-btn {
-      padding: 6px 10px;
+      padding: 6px 12px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 13px;
-      margin-left: 5px;
+      font-size: 14px;
+      font-weight: bold;
       background-color: #ff4d4d;
       color: white;
-      font-weight: bold;
+      transition: background 0.2s;
     }
 
     .remove-btn:hover {
@@ -111,7 +128,7 @@
       text-align: center;
       margin-top: 50px;
       font-size: 18px;
-      color: #555;
+      color: #cccccc;
     }
   </style>
 </head>
@@ -119,12 +136,14 @@
 
   <!-- ✅ Navbar -->
   <div class="navbar">
-    <h1>📈 StockTrade</h1>
+    <h1>📈 Capita</h1>
     <div class="nav-center">
       <a href="dashboard.html">Explore</a>
       <a href="watchlist.html">Watchlist</a>
       <a href="myportfolio.html">My Portfolio</a>
       <a href="transactions.html">Transactions</a>
+      <a href="sip.html">SIP Calculator</a>
+      <a href="guide.html">Guide</a>
       <a href="profile.html">My Profile</a>
     </div>
     <button class="logout-btn" id="logoutBtn">Logout</button>
@@ -168,6 +187,7 @@
           card.innerHTML = `
             <div class="stock-info">
               <strong>${stock.ticker_symbol}</strong> - ${stock.company_name}<br>
+              <small>💰 Price: ₹${Number(stock.stock_price).toFixed(2)}</small>
               <small>🆔 Watch ID: ${stock.id}</small>
             </div>
             <div>
