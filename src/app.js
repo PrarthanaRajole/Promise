@@ -16,12 +16,14 @@ app.get('/test', (req, res) => {
     res.json({ message: '✅ Server is running fine!' });
 });
 
+
 setRoutes(app);
 
 // ✅ DEFAULT route → open login.html first
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/login.html'));
 });
+
 
 app.listen(PORT, () => {
     console.log(`🚀 Server is running on http://localhost:${PORT}`);
