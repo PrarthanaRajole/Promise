@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Profile</title>
+  <title>My Transactions</title>
   <style>
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
+      background: linear-gradient(to bottom right, #000000, #000428, #001f33);
+      color: #ffffff;
     }
 
     .navbar {
-      background-color: #ffffff;
+      background-color: #0a0a0a;
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0, 255, 255, 0.1);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -24,9 +26,10 @@
 
     .navbar h1 {
       font-size: 26px;
-      color: #2c3e50;
+      color: #00ffcc;
       margin: 0;
       font-weight: bold;
+      text-shadow: 0 0 5px #00bfff;
     }
 
     .nav-center {
@@ -39,16 +42,16 @@
 
     .nav-center a {
       text-decoration: none;
-      color: #2c3e50;
+      color: #00ffcc;
       font-weight: bold;
       font-size: 18px;
       padding: 10px 14px;
       border-radius: 6px;
+      transition: background 0.2s ease;
     }
 
     .nav-center a:hover {
-      background: #f0f4ff;
-      color: #007bff;
+      background: rgba(0, 255, 255, 0.1);
     }
 
     .logout-btn {
@@ -60,6 +63,7 @@
       cursor: pointer;
       font-size: 15px;
       font-weight: bold;
+      transition: background 0.2s ease;
     }
 
     .logout-btn:hover {
@@ -68,176 +72,143 @@
 
     .container {
       margin: 40px auto;
-      max-width: 600px;
-      background: #ffffff;
+      max-width: 1000px;
+      background: rgba(255, 255, 255, 0.05);
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0px 2px 10px rgba(0, 255, 255, 0.08);
     }
 
     h2 {
-      margin-bottom: 20px;
-      color: #2c3e50;
+      color: #00ffcc;
       text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 4px #00bfff;
     }
 
-    .info-row {
-      margin-bottom: 15px;
-    }
-
-    .info-label {
-      font-weight: bold;
-      color: #333;
-    }
-
-    .info-value {
-      margin-top: 4px;
-      font-size: 18px;
-      color: #555;
-    }
-
-    input {
+    table {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0px 0px 8px rgba(0, 255, 255, 0.05);
     }
 
-    .btn {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      cursor: pointer;
-      margin-top: 20px;
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .edit-btn {
-      background-color: #f1c40f;
+    th {
+      background-color: #00bfff;
       color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .edit-btn:hover {
-      background-color: #d4ac0d;
+    td {
+      color: #e0f7fa;
     }
 
-    .save-btn {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .save-btn:hover {
-      background-color: #0056b3;
+    tr:last-child td {
+      border-bottom: none;
     }
   </style>
 </head>
 <body>
 
+  <!-- ✅ Navbar -->
   <div class="navbar">
-    <h1>📈 StockTrade</h1>
+    <h1>📈 Capita</h1>
+
     <div class="nav-center">
       <a href="dashboard.html">Explore</a>
       <a href="watchlist.html">Watchlist</a>
       <a href="myportfolio.html">My Portfolio</a>
       <a href="transactions.html">Transactions</a>
+      <a href="sip.html">SIP Calculator</a>
+      <a href="guide.html">Guide</a>
       <a href="profile.html">My Profile</a>
     </div>
+
     <button class="logout-btn" id="logoutBtn">Logout</button>
   </div>
 
+  <!-- ✅ Transactions Content -->
   <div class="container">
-    <h2>👤 My Profile</h2>
+    <h2>📜 My Transactions</h2>
 
-    <div class="info-row">
-      <label class="info-label">Name:</label>
-      <div id="nameDisplay" class="info-value"></div>
-      <input type="text" id="nameInput" style="display: none;" />
-    </div>
-
-    <div class="info-row">
-      <label class="info-label">Email:</label>
-      <div id="emailDisplay" class="info-value"></div>
-      <input type="email" id="emailInput" style="display: none;" />
-    </div>
-
-    <button class="btn edit-btn" id="editBtn" onclick="enableEdit()">✏️ Edit</button>
-    <button class="btn save-btn" id="saveBtn" style="display: none;" onclick="saveChanges()">💾 Save</button>
+    <table id="transactionsTable">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Ticker</th>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Price (₹)</th>
+          <th>Total (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="6" style="text-align:center;">Loading transactions...</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <script>
-    const name = localStorage.getItem('name');
-    const email = localStorage.getItem('email');
-    const userId = localStorage.getItem('user_id');
-
-    // Redirect if not logged in
-    if (!name || !email || !userId) {
-      window.location.href = 'login.html';
-    }
-
-    document.getElementById('nameDisplay').innerText = name;
-    document.getElementById('emailDisplay').innerText = email;
-    document.getElementById('nameInput').value = name;
-    document.getElementById('emailInput').value = email;
-
-    function enableEdit() {
-      document.getElementById('nameDisplay').style.display = 'none';
-      document.getElementById('emailDisplay').style.display = 'none';
-      document.getElementById('editBtn').style.display = 'none';
-
-      document.getElementById('nameInput').style.display = 'block';
-      document.getElementById('emailInput').style.display = 'block';
-      document.getElementById('saveBtn').style.display = 'inline-block';
-    }
-
-    async function saveChanges() {
-      const updatedName = document.getElementById('nameInput').value.trim();
-      const updatedEmail = document.getElementById('emailInput').value.trim();
-
-      if (!updatedName || !updatedEmail) {
-        return alert("❌ Name and email cannot be empty.");
-      }
-
-      try {
-        const res = await fetch(`/api/users/${userId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: updatedName,
-            email: updatedEmail,
-            password_hash: ""
-          })
-        });
-
-        if (res.ok) {
-          localStorage.setItem('name', updatedName);
-          localStorage.setItem('email', updatedEmail);
-          alert("✅ Profile updated!");
-
-          document.getElementById('nameDisplay').innerText = updatedName;
-          document.getElementById('emailDisplay').innerText = updatedEmail;
-
-          document.getElementById('nameDisplay').style.display = 'block';
-          document.getElementById('emailDisplay').style.display = 'block';
-          document.getElementById('editBtn').style.display = 'inline-block';
-
-          document.getElementById('nameInput').style.display = 'none';
-          document.getElementById('emailInput').style.display = 'none';
-          document.getElementById('saveBtn').style.display = 'none';
-        } else {
-          alert("❌ Failed to update profile.");
-        }
-      } catch (error) {
-        console.error(error);
-        alert("❌ Error while updating.");
-      }
-    }
-
     document.getElementById('logoutBtn').addEventListener('click', () => {
       localStorage.clear();
       window.location.href = 'login.html';
     });
+
+    async function loadTransactions() {
+      const user_id = localStorage.getItem('user_id');
+
+      if (!user_id) {
+        alert("User not logged in. Please log in first.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      let apipath = 'http://localhost:3000';
+
+      try {
+        const res = await fetch(`${apipath}/api/transactions/${user_id}`);
+        const transactions = await res.json();
+
+        const tableBody = document.querySelector("#transactionsTable tbody");
+
+        if (!Array.isArray(transactions) || transactions.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No transactions found.</td></tr>`;
+          return;
+        }
+
+        tableBody.innerHTML = '';
+        transactions.forEach(tx => {
+          const total = tx.quantity * tx.price_per_share;
+          tableBody.innerHTML += `
+            <tr>
+              <td>${tx.company_name}</td>
+              <td>${tx.ticker_symbol}</td>
+              <td>${tx.transaction_type.toUpperCase()}</td>
+              <td>${tx.quantity}</td>
+              <td>₹${tx.price_per_share}</td>
+              <td>₹${total.toFixed(2)}</td>
+            </tr>
+          `;
+        });
+
+      } catch (err) {
+        console.error(err);
+        document.querySelector("#transactionsTable tbody").innerHTML =
+          `<tr><td colspan="6" style="text-align:center;">Error loading transactions.</td></tr>`;
+      }
+    }
+
+    loadTransactions();
   </script>
 
 </body>
