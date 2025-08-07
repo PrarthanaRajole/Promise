@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Capita</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      cursor: pointer;
+      background: linear-gradient(to bottom right, #000000, #000428, #001f33);
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .landing-content {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .site-name {
+      font-size: 4.5rem;
+      color: #00ffcc;
+      animation: fadeIn 2s ease-out forwards;
+      text-shadow: 0 0 20px #00ffcc, 0 0 40px #00bfff;
+    }
+
+    .tagline {
+      margin-top: 15px;
+      font-size: 1.5rem;
+      color: #00bfff;
+      text-shadow: 0 0 10px #00bfff;
+      animation: floatTag 3s infinite ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatTag {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body onclick="window.location.href='login.html'">
+  <!-- Stock Line Background -->
+  <canvas id="graph-bg"></canvas>
+
+  <div class="landing-content">
+    <h1 class="site-name">Capita</h1>
+    <p class="tagline">Track. Invest. Grow.</p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("graph-bg");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let points = [];
+    let spacing = 100;
+
+    for (let x = 0; x < canvas.width + spacing; x += spacing) {
+      let y = canvas.height / 2 + Math.random() * 100 - 50;
+      points.push({ x, y });
+    }
+
+    function drawGraph() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+      }
+      ctx.strokeStyle = '#00ffcc';
+      ctx.lineWidth = 2;
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#00bfff'; // Blue glow
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function animate() {
+      for (let i = 0; i < points.length; i++) {
+        points[i].y += Math.random() * 4 - 2;
+        points[i].x -= 0.5;
+        if (points[i].x < -spacing) {
+          points[i].x = canvas.width;
+          points[i].y = canvas.height / 2 + Math.random() * 100 - 50;
+        }
+      }
+      drawGraph();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
