@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login | StockTrade</title>
+  <meta charset="UTF-8" />
+  <title>Capita - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #000000, #000428, #001f33);
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 1;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #74ABE2, #5563DE);
     }
 
     .login-box {
-      background: #fff;
-      padding: 40px 30px;
+      background: rgba(15, 15, 15, 0.95);
+      padding: 40px;
       border-radius: 12px;
-      box-shadow: 0px 4px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 0 25px #00bfff50;
+      color: white;
       width: 350px;
       text-align: center;
       animation: fadeIn 0.8s ease-in-out;
@@ -30,66 +47,124 @@
     }
 
     .login-box h2 {
-      margin-bottom: 20px;
-      font-size: 26px;
-      color: #2c3e50;
+      margin-bottom: 25px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00bfff;
     }
 
     .login-box input {
       width: 100%;
-      margin: 12px 0;
       padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 15px;
-      transition: border-color 0.3s;
+      margin: 10px 0;
+      background: #1f1f1f;
+      border: 1px solid #00ffcc;
+      border-radius: 6px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+      box-shadow: 0 0 5px #00bfff30;
+      transition: 0.3s ease;
     }
 
     .login-box input:focus {
-      border-color: #5563DE;
-      outline: none;
-      box-shadow: 0 0 6px rgba(85, 99, 222, 0.2);
+      box-shadow: 0 0 10px #00ffcc80;
+      border-color: #00ffcc;
     }
 
     .login-box button {
       width: 100%;
-      margin-top: 15px;
-      padding: 12px;
+      background: linear-gradient(90deg, #00ffcc, #00bfff);
+      color: #0f0f0f;
       border: none;
-      border-radius: 8px;
-      background: #5563DE;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
+      padding: 12px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      font-weight: bold;
+      margin-top: 15px;
+      box-shadow: 0 0 20px #00ffcc60;
+      transition: 0.3s ease;
+      font-size: 15px;
     }
 
     .login-box button:hover {
-      background: #3b49b3;
+      background: linear-gradient(90deg, #00ffaa, #0099ff);
+      box-shadow: 0 0 25px #00ffcc;
     }
 
     .login-footer {
       margin-top: 15px;
       font-size: 13px;
-      color: #666;
+      color: #bbb;
     }
   </style>
 </head>
 <body>
-
-  <div class="login-box">
-    <h2>🔐 StockTrade Login</h2>
-    <form id="loginForm">
-      <input type="text" id="name" placeholder="Enter your name" required />
-      <input type="email" id="email" placeholder="Enter your email" required />
-      <button type="submit">Login</button>
-    </form>
-    <div class="login-footer">
-      🚀 Start trading smarter today!
+  <canvas id="graph-bg"></canvas>
+  <div class="login-container">
+    <div class="login-box">
+      <h2>🔐 Login to Capita</h2>
+      <form id="loginForm">
+        <input type="text" id="name" placeholder="Enter your name" required />
+        <input type="email" id="email" placeholder="Enter your email" required />
+        <button type="submit">Login</button>
+      </form>
+      <div class="login-footer">🚀 Start trading smarter today!</div>
     </div>
   </div>
 
+  <!-- Background animation -->
+  <script>
+    const canvas = document.getElementById("graph-bg");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let points = [];
+    let spacing = 100;
+
+    for (let x = 0; x < canvas.width + spacing; x += spacing) {
+      let y = canvas.height / 2 + Math.random() * 100 - 50;
+      points.push({ x, y });
+    }
+
+    function drawGraph() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+      }
+      ctx.strokeStyle = '#00ffcc';
+      ctx.lineWidth = 2;
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#00bfff';
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function animate() {
+      for (let i = 0; i < points.length; i++) {
+        points[i].y += Math.random() * 4 - 2;
+        points[i].x -= 0.5;
+        if (points[i].x < -spacing) {
+          points[i].x = canvas.width;
+          points[i].y = canvas.height / 2 + Math.random() * 100 - 50;
+        }
+      }
+      drawGraph();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+  <!-- Login functionality -->
   <script>
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -99,19 +174,16 @@
       let user_id;
 
       try {
-        // Fetch all users
         const res = await fetch('/api/users');
         const users = await res.json();
 
-        // Check if user exists
         const existingUser = users.find(user => user.email === email);
-        
+
         if (existingUser) {
           console.log('ℹ️ User already exists:', existingUser);
           user_id = existingUser.user_id || existingUser.id;
           name = existingUser.name;
         } else {
-          // Register new user
           const createRes = await fetch('/api/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -133,12 +205,10 @@
           return;
         }
 
-        // Store in localStorage
         localStorage.setItem('user_id', user_id);
         localStorage.setItem('name', name);
         localStorage.setItem('email', email);
 
-        // Redirect
         window.location.href = 'dashboard.html';
 
       } catch (err) {
@@ -147,8 +217,8 @@
       }
     });
   </script>
-
 </body>
 </html>
+
 
 
