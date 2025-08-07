@@ -2,21 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Profile</title>
+  <title>Capita - User Profile</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      height: 100%;
+      background: linear-gradient(to bottom right, #000000, #000428, #001f33);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
     }
 
     .navbar {
-      background-color: #ffffff;
+      background: #0a0a0a;
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0, 255, 255, 0.1);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -24,9 +30,10 @@
 
     .navbar h1 {
       font-size: 26px;
-      color: #2c3e50;
+      color: #00ffcc;
       margin: 0;
       font-weight: bold;
+      text-shadow: 0 0 5px #00bfff;
     }
 
     .nav-center {
@@ -39,16 +46,16 @@
 
     .nav-center a {
       text-decoration: none;
-      color: #2c3e50;
+      color: #00ffcc;
       font-weight: bold;
       font-size: 18px;
       padding: 10px 14px;
       border-radius: 6px;
+      transition: background 0.2s;
     }
 
     .nav-center a:hover {
-      background: #f0f4ff;
-      color: #007bff;
+      background: rgba(0, 255, 255, 0.1);
     }
 
     .logout-btn {
@@ -60,47 +67,59 @@
       cursor: pointer;
       font-size: 15px;
       font-weight: bold;
+      transition: background 0.2s;
     }
 
     .logout-btn:hover {
       background: #d93636;
     }
 
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
     .container {
-      margin: 40px auto;
+      width: 100%;
       max-width: 600px;
-      background: #ffffff;
+      background: rgba(15, 15, 15, 0.9);
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 0 25px #00bfff40;
     }
 
     h2 {
-      margin-bottom: 20px;
-      color: #2c3e50;
+      margin-bottom: 25px;
+      color: #00ffcc;
       text-align: center;
+      text-shadow: 0 0 8px #00bfff;
     }
 
     .info-row {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .info-label {
       font-weight: bold;
-      color: #333;
+      color: #00ffaa;
+      display: block;
+      margin-bottom: 6px;
     }
 
     .info-value {
-      margin-top: 4px;
       font-size: 18px;
-      color: #555;
+      color: #e0e0e0;
     }
 
     input {
       width: 100%;
       padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
+      background: #111;
+      border: 1px solid #00ffcc30;
+      color: #fff;
       border-radius: 6px;
       font-size: 16px;
     }
@@ -116,7 +135,7 @@
 
     .edit-btn {
       background-color: #f1c40f;
-      color: white;
+      color: black;
     }
 
     .edit-btn:hover {
@@ -124,12 +143,12 @@
     }
 
     .save-btn {
-      background-color: #007bff;
+      background-color: #00bfff;
       color: white;
     }
 
     .save-btn:hover {
-      background-color: #0056b3;
+      background-color: #0099cc;
     }
   </style>
 </head>
@@ -142,28 +161,31 @@
       <a href="watchlist.html">Watchlist</a>
       <a href="myportfolio.html">My Portfolio</a>
       <a href="transactions.html">Transactions</a>
+      <a href="sip.html">SIP Calculator</a>
       <a href="profile.html">My Profile</a>
     </div>
     <button class="logout-btn" id="logoutBtn">Logout</button>
   </div>
 
-  <div class="container">
-    <h2>👤 My Profile</h2>
+  <div class="main-wrapper">
+    <div class="container">
+      <h2>👤 My Profile</h2>
 
-    <div class="info-row">
-      <label class="info-label">Name:</label>
-      <div id="nameDisplay" class="info-value"></div>
-      <input type="text" id="nameInput" style="display: none;" />
+      <div class="info-row">
+        <label class="info-label">Name:</label>
+        <div id="nameDisplay" class="info-value"></div>
+        <input type="text" id="nameInput" style="display: none;" />
+      </div>
+
+      <div class="info-row">
+        <label class="info-label">Email:</label>
+        <div id="emailDisplay" class="info-value"></div>
+        <input type="email" id="emailInput" style="display: none;" />
+      </div>
+
+      <button class="btn edit-btn" id="editBtn" onclick="enableEdit()">✏️ Edit</button>
+      <button class="btn save-btn" id="saveBtn" style="display: none;" onclick="saveChanges()">💾 Save</button>
     </div>
-
-    <div class="info-row">
-      <label class="info-label">Email:</label>
-      <div id="emailDisplay" class="info-value"></div>
-      <input type="email" id="emailInput" style="display: none;" />
-    </div>
-
-    <button class="btn edit-btn" id="editBtn" onclick="enableEdit()">✏️ Edit</button>
-    <button class="btn save-btn" id="saveBtn" style="display: none;" onclick="saveChanges()">💾 Save</button>
   </div>
 
   <script>
@@ -171,7 +193,6 @@
     const email = localStorage.getItem('email');
     const userId = localStorage.getItem('user_id');
 
-    // Redirect if not logged in
     if (!name || !email || !userId) {
       window.location.href = 'login.html';
     }
