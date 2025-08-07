@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const { IndexController } = require('../controllers');
 
+
 const indexController = new IndexController();
+
 
 function setRoutes(app) {
     console.log("✅ setRoutes() called - routes are loading");
